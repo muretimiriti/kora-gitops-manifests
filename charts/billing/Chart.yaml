@@ -1,0 +1,5 @@
+apiVersion: v2
+name: billing
+description: Kora billing service
+version: 0.1.0
+appVersion: "0.1.0"

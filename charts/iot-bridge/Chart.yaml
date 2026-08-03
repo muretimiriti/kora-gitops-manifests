@@ -1,0 +1,5 @@
+apiVersion: v2
+name: iot-bridge
+description: Kora iot-bridge service
+version: 0.1.0
+appVersion: "0.1.0"

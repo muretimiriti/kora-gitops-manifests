@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-console
+  labels:
+    app: admin-console
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: admin-console
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}

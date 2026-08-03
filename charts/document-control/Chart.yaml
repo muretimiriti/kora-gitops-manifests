@@ -1,0 +1,5 @@
+apiVersion: v2
+name: document-control
+description: Kora document-control service
+version: 0.1.0
+appVersion: "0.1.0"

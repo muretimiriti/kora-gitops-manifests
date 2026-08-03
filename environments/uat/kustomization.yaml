@@ -1,0 +1,347 @@
+# uat environment -- CICD_Deployment_Trust_Design.md Section 8.1a
+# Tekton's open-promotion-pr Task (infra/tekton/tasks/tasks.yaml in the app monorepo) bumps
+# each unit's `image.tag` value below via a scripted edit -- this is the "PR bumps image tag"
+# step (Section 8.2), now a concrete, findable line per unit rather than a description.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+helmGlobals:
+  chartHome: ../../charts
+
+helmCharts:
+  - name: admin-console
+    releaseName: admin-console
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: agent-orchestrator
+    releaseName: agent-orchestrator
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: billing
+    releaseName: billing
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: compliance
+    releaseName: compliance
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: compliance-forms
+    releaseName: compliance-forms
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: core
+    releaseName: core
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: document-control
+    releaseName: document-control
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: esg
+    releaseName: esg
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: evidence
+    releaseName: evidence
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: identity
+    releaseName: identity
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: intelligence
+    releaseName: intelligence
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: iot-bridge
+    releaseName: iot-bridge
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: maintain
+    releaseName: maintain
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: marketing-site
+    releaseName: marketing-site
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: notification
+    releaseName: notification
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: ops
+    releaseName: ops
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: ops-pwa
+    releaseName: ops-pwa
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: quality
+    releaseName: quality
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: realtime-gateway
+    releaseName: realtime-gateway
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: trust-portal
+    releaseName: trust-portal
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: trust-portal-ui
+    releaseName: trust-portal-ui
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: vendor
+    releaseName: vendor
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: web
+    releaseName: web
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: workflow
+    releaseName: workflow
+    namespace: kora-uat
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: uat-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi

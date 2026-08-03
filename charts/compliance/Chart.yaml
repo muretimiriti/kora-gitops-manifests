@@ -1,0 +1,5 @@
+apiVersion: v2
+name: compliance
+description: Kora compliance service
+version: 0.1.0
+appVersion: "0.1.0"

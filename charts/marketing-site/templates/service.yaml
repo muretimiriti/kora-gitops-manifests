@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: marketing-site
+  labels:
+    app: marketing-site
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: marketing-site
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}

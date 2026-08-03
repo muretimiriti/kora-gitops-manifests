@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: document-control
+  labels:
+    app: document-control
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: document-control
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}

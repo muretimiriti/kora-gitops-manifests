@@ -1,0 +1,5 @@
+apiVersion: v2
+name: marketing-site
+description: Kora marketing-site app
+version: 0.1.0
+appVersion: "0.1.0"

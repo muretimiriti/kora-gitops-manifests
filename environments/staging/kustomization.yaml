@@ -1,0 +1,347 @@
+# staging environment -- CICD_Deployment_Trust_Design.md Section 8.1a
+# Tekton's open-promotion-pr Task (infra/tekton/tasks/tasks.yaml in the app monorepo) bumps
+# each unit's `image.tag` value below via a scripted edit -- this is the "PR bumps image tag"
+# step (Section 8.2), now a concrete, findable line per unit rather than a description.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+helmGlobals:
+  chartHome: ../../charts
+
+helmCharts:
+  - name: admin-console
+    releaseName: admin-console
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: agent-orchestrator
+    releaseName: agent-orchestrator
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: billing
+    releaseName: billing
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: compliance
+    releaseName: compliance
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: compliance-forms
+    releaseName: compliance-forms
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: core
+    releaseName: core
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: document-control
+    releaseName: document-control
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: esg
+    releaseName: esg
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: evidence
+    releaseName: evidence
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: identity
+    releaseName: identity
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: intelligence
+    releaseName: intelligence
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: iot-bridge
+    releaseName: iot-bridge
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: maintain
+    releaseName: maintain
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: marketing-site
+    releaseName: marketing-site
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: notification
+    releaseName: notification
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: ops
+    releaseName: ops
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: ops-pwa
+    releaseName: ops-pwa
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: quality
+    releaseName: quality
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: realtime-gateway
+    releaseName: realtime-gateway
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: trust-portal
+    releaseName: trust-portal
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: trust-portal-ui
+    releaseName: trust-portal-ui
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: vendor
+    releaseName: vendor
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: web
+    releaseName: web
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  - name: workflow
+    releaseName: workflow
+    namespace: kora-staging
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: staging-latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi

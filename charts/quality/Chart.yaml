@@ -1,0 +1,5 @@
+apiVersion: v2
+name: quality
+description: Kora quality service
+version: 0.1.0
+appVersion: "0.1.0"

@@ -1,0 +1,347 @@
+# prod-africa environment -- CICD_Deployment_Trust_Design.md Section 8.1a
+# Tekton's open-promotion-pr Task (infra/tekton/tasks/tasks.yaml in the app monorepo) bumps
+# each unit's `image.tag` value below via a scripted edit -- this is the "PR bumps image tag"
+# step (Section 8.2), now a concrete, findable line per unit rather than a description.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+helmGlobals:
+  chartHome: ../../charts
+
+helmCharts:
+  - name: admin-console
+    releaseName: admin-console
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: agent-orchestrator
+    releaseName: agent-orchestrator
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: billing
+    releaseName: billing
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: compliance
+    releaseName: compliance
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: compliance-forms
+    releaseName: compliance-forms
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: core
+    releaseName: core
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: document-control
+    releaseName: document-control
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: esg
+    releaseName: esg
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: evidence
+    releaseName: evidence
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: identity
+    releaseName: identity
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: intelligence
+    releaseName: intelligence
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: iot-bridge
+    releaseName: iot-bridge
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: maintain
+    releaseName: maintain
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: marketing-site
+    releaseName: marketing-site
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: notification
+    releaseName: notification
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: ops
+    releaseName: ops
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: ops-pwa
+    releaseName: ops-pwa
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: quality
+    releaseName: quality
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: realtime-gateway
+    releaseName: realtime-gateway
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: trust-portal
+    releaseName: trust-portal
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: trust-portal-ui
+    releaseName: trust-portal-ui
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: vendor
+    releaseName: vendor
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: web
+    releaseName: web
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+  - name: workflow
+    releaseName: workflow
+    namespace: kora-prod-africa
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: prod-latest
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
