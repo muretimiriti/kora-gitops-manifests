@@ -3,9 +3,31 @@ image:
   tag: latest # overridden per environment -- environments/*/kustomization.yaml's valuesInline
   pullPolicy: IfNotPresent
 replicaCount: 1
+
 service:
-  port: 8080
+  # Real listening port, taken from services/realtime-gateway/.env.example's own PORT. The previous
+  # charts all claimed 3000, which no service actually listens on.
+  port: 3010
   type: ClusterIP
+
+# Matches this service's actual health route.
+healthPath: /healthz
+
+serviceAccountName: kora-workload
+
+# Non-secret config, rendered into a ConfigMap and loaded via envFrom. In-cluster DNS names
+# come from the Terraform modules that provision each backing service.
+env:
+  PORT: "3010"
+  NATS_URL: "nats://nats.kora-dev.svc.cluster.local:4222"
+  REDIS_URL: "redis://redis-master.kora-dev.svc.cluster.local:6379"
+  IDENTITY_JWKS_URL: "http://identity.kora-dev.svc.cluster.local:3001/internal/jwks"
+  TOPICS_CONFIG_PATH: "config/topics.yaml"
+
+# Credentials live in a Secret created out of band (see infra/bootstrap in the app monorepo)
+# so they are never committed to this repo. Empty means the service needs none.
+secretName: 
+
 resources:
   requests:
     cpu: 100m

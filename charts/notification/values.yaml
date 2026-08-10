@@ -3,9 +3,29 @@ image:
   tag: latest # overridden per environment -- environments/*/kustomization.yaml's valuesInline
   pullPolicy: IfNotPresent
 replicaCount: 1
+
 service:
-  port: 3000
+  # Real listening port, taken from services/notification/.env.example's own PORT. The previous
+  # charts all claimed 3000, which no service actually listens on.
+  port: 3005
   type: ClusterIP
+
+# Matches this service's actual health route.
+healthPath: /health
+
+serviceAccountName: kora-workload
+
+# Non-secret config, rendered into a ConfigMap and loaded via envFrom. In-cluster DNS names
+# come from the Terraform modules that provision each backing service.
+env:
+  PORT: "3005"
+  NATS_URL: "nats://nats.kora-dev.svc.cluster.local:4222"
+  VAULT_ADDR: "http://vault.kora-dev.svc.cluster.local:8200"
+
+# Credentials live in a Secret created out of band (see infra/bootstrap in the app monorepo)
+# so they are never committed to this repo. Empty means the service needs none.
+secretName: kora-notification-secrets
+
 resources:
   requests:
     cpu: 100m

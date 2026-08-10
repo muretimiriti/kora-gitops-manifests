@@ -1,24 +1,52 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: quality
+  name: {{ .Chart.Name }}
   labels:
-    app: quality
+    app: {{ .Chart.Name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: quality
+      app: {{ .Chart.Name }}
   template:
     metadata:
       labels:
-        app: quality
+        app: {{ .Chart.Name }}
     spec:
+      # Provisioned by infra/terraform/modules/namespace in the app monorepo, annotated for
+      # Vault Agent Injector. Previously unset, so pods ran as `default` and the injector
+      # annotations that module carefully applies were never actually reaching any workload.
+      serviceAccountName: {{ .Values.serviceAccountName }}
       containers:
-        - name: quality
+        - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.service.port }}
+            - name: http
+              containerPort: {{ .Values.service.port }}
+          # Without these the pod starts with no DATABASE_URL, no NATS_URL, no VAULT_ADDR --
+          # it would crash on boot. Non-secret config is rendered into a ConfigMap from
+          # .Values.env; credentials come from a Secret created out of band (never committed
+          # to this repo) and named by .Values.secretName.
+          envFrom:
+            - configMapRef:
+                name: {{ .Chart.Name }}-config
+          {{- if .Values.secretName }}
+            - secretRef:
+                name: {{ .Values.secretName }}
+          {{- end }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.healthPath }}
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.healthPath }}
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
