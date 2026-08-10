@@ -4,17 +4,14 @@
 # step (Section 8.2), now a concrete, findable line per unit rather than a description.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
 helmGlobals:
   chartHome: ../../charts
-
 # Scoped to the services that actually have implemented code and buildable images. The other
 # 15 charts in ../../charts are Phase-0 scaffolds for services that do not exist yet --
 # inflating them here would deploy 15 Deployments referencing images that were never built,
 # producing a wall of ImagePullBackOff pods and a permanently unhealthy ArgoCD Application.
 # Add each one back to this list when its service is actually implemented and pushing images.
 # Currently excluded: admin-console, agent-orchestrator, billing, core, esg, intelligence, iot-bridge, maintain, marketing-site, ops, ops-pwa, trust-portal, trust-portal-ui, vendor, web
-
 helmCharts:
   - name: compliance
     releaseName: compliance
@@ -64,7 +61,7 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: dev-latest
+        tag: 6a6de0e0560a5296a49f86a8e9c0e3b3109e5cd0
       resources:
         requests:
           cpu: 100m
