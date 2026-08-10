@@ -1,13 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: realtime-gateway
+  name: {{ .Chart.Name }}
   labels:
-    app: realtime-gateway
+    app: {{ .Chart.Name }}
 spec:
   type: {{ .Values.service.type }}
   selector:
-    app: realtime-gateway
+    app: {{ .Chart.Name }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.port }}
+    - name: http
+      port: {{ .Values.service.port }}
+      targetPort: http
