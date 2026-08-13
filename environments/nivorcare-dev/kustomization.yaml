@@ -1,0 +1,29 @@
+# NivorCare dev environment — its own overlay, deliberately separate from
+# environments/dev (which is Kora's shared kora-dev namespace for its own services).
+# NivorCare is a distinct application, not a Kora service, and none of the Helm-rendered
+# resources here carry an explicit metadata.namespace — so syncing it through Kora's own
+# Application would silently land it in kora-dev (the Application's destination.namespace
+# becomes the default for unnamespaced resources). A separate overlay + separate ArgoCD
+# Application (infra/argocd/applications/nivorcare-dev.yaml in the NivorCare repo) keeps it
+# in its own nivorcare-dev namespace instead.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+helmGlobals:
+  chartHome: ../../charts
+
+helmCharts:
+  - name: nivorcare
+    releaseName: nivorcare
+    namespace: nivorcare-dev
+    valuesInline:
+      replicaCount: 1
+      image:
+        tag: latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi

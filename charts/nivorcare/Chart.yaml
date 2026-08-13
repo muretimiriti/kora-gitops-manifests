@@ -1,0 +1,5 @@
+apiVersion: v2
+name: nivorcare
+description: NivorCare hospital management system web console
+version: 0.1.0
+appVersion: "0.1.0"

@@ -1,0 +1,36 @@
+image:
+  repository: docker.io/muretimiriti/nivorcare
+  tag: latest # overridden per environment -- environments/*/kustomization.yaml's valuesInline
+  pullPolicy: Always # dev-latest is a floating tag; IfNotPresent risks serving a stale cached image after a rebuild -- see charts/identity's own note on this
+replicaCount: 1
+
+service:
+  # nginx (docker/nginx.conf in the app repo) serves the built SPA directly on 80 -- no separate app port.
+  port: 80
+  type: ClusterIP
+
+# Static SPA served by nginx -- "/" reliably returns the built index.html (SPA fallback in
+# docker/nginx.conf), there is no dedicated /health route to check instead.
+healthPath: /
+
+serviceAccountName: default
+
+# Non-secret runtime config, rendered into a ConfigMap and read by the container's
+# docker-entrypoint.d hook at startup, which writes public/env-config.js
+# (window.__NIVORCARE_ENV__) -- this is how one built image gets re-pointed at a different
+# Supabase project per environment without rebuilding. The Supabase publishable/anon key is
+# designed to be client-exposed, so it is not treated as a Secret here.
+env:
+  VITE_SUPABASE_URL: "https://your-project-ref.supabase.co"
+  VITE_SUPABASE_PUBLISHABLE_KEY: "your-anon-key"
+
+# No credentials beyond the values above -- empty means the service needs no Secret.
+secretName: ""
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
