@@ -75,7 +75,7 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: 395a73cd37000e3052df9084a57099b12564ba45
+        tag: fc39779e39c5b56eebc83b6251be55a4d8ce577c
       resources:
         requests:
           cpu: 100m
