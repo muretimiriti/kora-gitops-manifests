@@ -61,7 +61,7 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: 6a6de0e0560a5296a49f86a8e9c0e3b3109e5cd0
+        tag: fc39779e39c5b56eebc83b6251be55a4d8ce577c
       resources:
         requests:
           cpu: 100m
