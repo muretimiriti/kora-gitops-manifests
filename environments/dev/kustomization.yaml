@@ -19,7 +19,8 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: dev-latest
+        # Phase 3, Stage B (ADR-069): real Vault Kubernetes-auth login.
+        tag: 817492ebf770b925453471e04c636353e780fcf4
       resources:
         requests:
           cpu: 100m
@@ -33,7 +34,8 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: 395a73cd37000e3052df9084a57099b12564ba45
+        # Phase 3, Stage B (ADR-069): real Vault Kubernetes-auth login.
+        tag: 817492ebf770b925453471e04c636353e780fcf4
       resources:
         requests:
           cpu: 100m
@@ -47,7 +49,8 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: 395a73cd37000e3052df9084a57099b12564ba45
+        # Phase 3, Stage B (ADR-069): real Vault Kubernetes-auth login.
+        tag: 817492ebf770b925453471e04c636353e780fcf4
       resources:
         requests:
           cpu: 100m
@@ -61,7 +64,8 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: 6a6de0e0560a5296a49f86a8e9c0e3b3109e5cd0
+        # Phase 3, Stage B (ADR-069): real Vault Kubernetes-auth login.
+        tag: 817492ebf770b925453471e04c636353e780fcf4
       resources:
         requests:
           cpu: 100m
@@ -91,7 +95,8 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: dev-latest
+        # Phase 3, Stage B (ADR-069): real Vault Kubernetes-auth login.
+        tag: 817492ebf770b925453471e04c636353e780fcf4
       resources:
         requests:
           cpu: 100m
@@ -105,7 +110,8 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: 395a73cd37000e3052df9084a57099b12564ba45
+        # Phase 3, Stage B (ADR-069): real Vault Kubernetes-auth login.
+        tag: 817492ebf770b925453471e04c636353e780fcf4
       resources:
         requests:
           cpu: 100m
@@ -133,7 +139,8 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: 395a73cd37000e3052df9084a57099b12564ba45
+        # Phase 3, Stage B (ADR-069): real Vault Kubernetes-auth login.
+        tag: 817492ebf770b925453471e04c636353e780fcf4
       resources:
         requests:
           cpu: 100m
