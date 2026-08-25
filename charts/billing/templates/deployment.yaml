@@ -14,11 +14,22 @@ spec:
       labels:
         app: billing
     spec:
+      # Phase 3, Stage B (ADR-069): matches the identical field on every other real service's
+      # deployment.yaml -- see quality's for the fuller comment on why this exists at all.
+      serviceAccountName: {{ .Values.serviceAccountName }}
       containers:
         - name: billing
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.service.port }}
+          # Phase 3, Stage B (ADR-069): billing had no ConfigMap/envFrom wiring at all -- added
+          # so VAULT_ADDR/VAULT_K8S_ROLE (values.yaml's own env: block) actually reach the
+          # container, not just exist unused in a values file. No secretRef here (unlike every
+          # other real service) -- billing's missing DATABASE_URL/other-secrets wiring is the
+          # separate, pre-existing gap this stage doesn't touch.
+          envFrom:
+            - configMapRef:
+                name: {{ .Chart.Name }}-config
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
