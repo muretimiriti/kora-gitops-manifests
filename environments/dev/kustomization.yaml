@@ -75,7 +75,9 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: 395a73cd37000e3052df9084a57099b12564ba45
+        # Phase 3, Stage B (ADR-069) walking skeleton: real Kubernetes-auth login, built and
+        # pushed from Kora commit d44920ef87513333fd381aaab737b7a0ddb1e6b0.
+        tag: d44920ef87513333fd381aaab737b7a0ddb1e6b0
       resources:
         requests:
           cpu: 100m

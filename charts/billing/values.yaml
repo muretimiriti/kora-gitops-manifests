@@ -3,6 +3,20 @@ image:
   tag: latest # overridden per environment -- environments/*/kustomization.yaml's valuesInline
   pullPolicy: IfNotPresent
 replicaCount: 1
+
+# Phase 3, Stage B (ADR-069): added along with the other 8 real services' identical field --
+# billing's chart never got this in the original "make deployable" pass (it has no
+# healthPath/env/secretName wiring either, a separate pre-existing gap, not touched here).
+# Not currently deployed to kora-dev; added so it's correct whenever it is.
+serviceAccountName: billing-workload
+
+# Phase 3, Stage B (ADR-069): VAULT_ADDR/VAULT_K8S_ROLE needed for real Vault auth to work at
+# all -- without VAULT_ADDR, signOutboxEntry.ts's own default (http://localhost:8200) would be
+# wrong in-cluster. Matches the identical block every other real service's values.yaml has.
+env:
+  VAULT_ADDR: "http://vault.kora-dev.svc.cluster.local:8200"
+  VAULT_K8S_ROLE: "billing-dev"
+
 service:
   port: 3000
   type: ClusterIP

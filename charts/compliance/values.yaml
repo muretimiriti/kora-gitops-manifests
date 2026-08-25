@@ -13,7 +13,7 @@ service:
 # Matches this service's actual health route.
 healthPath: /health
 
-serviceAccountName: kora-workload
+serviceAccountName: compliance-workload
 
 # Non-secret config, rendered into a ConfigMap and loaded via envFrom. In-cluster DNS names
 # come from the Terraform modules that provision each backing service.
@@ -21,6 +21,10 @@ env:
   PORT: "3007"
   NATS_URL: "nats://nats.kora-dev.svc.cluster.local:4222"
   VAULT_ADDR: "http://vault.kora-dev.svc.cluster.local:8200"
+  # Phase 3, Stage B (ADR-069): matches this service's own Vault Kubernetes-auth role
+  # (infra/scripts/vault-policies.sh in the app monorepo) -- compliance-workload's ServiceAccount
+  # above logs in as this role, scoped to only its own kora-signing paths.
+  VAULT_K8S_ROLE: "compliance-dev"
 
 # Credentials live in a Secret created out of band (see infra/bootstrap in the app monorepo)
 # so they are never committed to this repo. Empty means the service needs none.
