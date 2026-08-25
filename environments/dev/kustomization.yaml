@@ -64,8 +64,9 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        # Phase 3, Stage B (ADR-069): real Vault Kubernetes-auth login.
-        tag: 817492ebf770b925453471e04c636353e780fcf4
+        # Fixes the relay only ever polling Identity's own outbox table (ADR-069's follow-up) --
+        # see relay.go's own comment on outboxTables.
+        tag: a6395717d06a5c2fa1ac09c19dbc464f1e608580
       resources:
         requests:
           cpu: 100m
