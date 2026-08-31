@@ -2,62 +2,38 @@
 # Tekton's open-promotion-pr Task (infra/tekton/tasks/tasks.yaml in the app monorepo) bumps
 # each unit's `image.tag` value below via a scripted edit -- this is the "PR bumps image tag"
 # step (Section 8.2), now a concrete, findable line per unit rather than a description.
+#
+# Phase 4: pruned from all 24 charts down to the same 9 real, buildable services dev's own
+# kustomization.yaml lists -- this file previously listed all 24 (including 15 pure Phase-0
+# scaffolds) with a "staging-latest" tag that has never been built, which would have produced
+# 15 ImagePullBackOff Deployments and a permanently unhealthy ArgoCD Application the moment
+# this was ever synced. Reuses the exact same real commit-SHA image tags currently live in
+# dev -- same application code, no separate staging build needed for a first stand-up.
+#
+# Every real service below overrides NATS_URL (staging has its own NATS, not dev's) and, where
+# it has a Vault dependency, VAULT_K8S_ROLE to its own "<service>-staging" role -- VAULT_ADDR
+# is deliberately left at its chart default (dev's Vault) -- staging reuses dev's already-running
+# Vault HA cluster rather than a second one (Phase 4's own explicit scope decision, see
+# infra/terraform/environments/staging/main.tf's own comment in the app monorepo).
+#
+# Currently excluded (same 15 as dev, for the same reason): admin-console, agent-orchestrator,
+# billing, core, esg, intelligence, iot-bridge, maintain, marketing-site, ops, ops-pwa,
+# trust-portal, trust-portal-ui, vendor, web
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
 helmGlobals:
   chartHome: ../../charts
-
 helmCharts:
-  - name: admin-console
-    releaseName: admin-console
-    namespace: kora-staging
-    valuesInline:
-      replicaCount: 1
-      image:
-        tag: staging-latest
-      resources:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-        limits:
-          cpu: 500m
-          memory: 512Mi
-  - name: agent-orchestrator
-    releaseName: agent-orchestrator
-    namespace: kora-staging
-    valuesInline:
-      replicaCount: 1
-      image:
-        tag: staging-latest
-      resources:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-        limits:
-          cpu: 500m
-          memory: 512Mi
-  - name: billing
-    releaseName: billing
-    namespace: kora-staging
-    valuesInline:
-      replicaCount: 1
-      image:
-        tag: staging-latest
-      resources:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-        limits:
-          cpu: 500m
-          memory: 512Mi
   - name: compliance
     releaseName: compliance
     namespace: kora-staging
     valuesInline:
       replicaCount: 1
       image:
-        tag: staging-latest
+        tag: 817492ebf770b925453471e04c636353e780fcf4
+      env:
+        NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
+        VAULT_K8S_ROLE: "compliance-staging"
       resources:
         requests:
           cpu: 100m
@@ -71,21 +47,10 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: staging-latest
-      resources:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-        limits:
-          cpu: 500m
-          memory: 512Mi
-  - name: core
-    releaseName: core
-    namespace: kora-staging
-    valuesInline:
-      replicaCount: 1
-      image:
-        tag: staging-latest
+        tag: 817492ebf770b925453471e04c636353e780fcf4
+      env:
+        NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
+        VAULT_K8S_ROLE: "compliance-forms-staging"
       resources:
         requests:
           cpu: 100m
@@ -99,21 +64,10 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: staging-latest
-      resources:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-        limits:
-          cpu: 500m
-          memory: 512Mi
-  - name: esg
-    releaseName: esg
-    namespace: kora-staging
-    valuesInline:
-      replicaCount: 1
-      image:
-        tag: staging-latest
+        tag: 817492ebf770b925453471e04c636353e780fcf4
+      env:
+        NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
+        VAULT_K8S_ROLE: "document-control-staging"
       resources:
         requests:
           cpu: 100m
@@ -127,7 +81,11 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: staging-latest
+        tag: a6395717d06a5c2fa1ac09c19dbc464f1e608580
+      env:
+        NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
+        VAULT_K8S_ROLE: "evidence-staging"
+        MINIO_ENDPOINT: "minio.kora-staging.svc.cluster.local:9000"
       resources:
         requests:
           cpu: 100m
@@ -141,63 +99,10 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: staging-latest
-      resources:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-        limits:
-          cpu: 500m
-          memory: 512Mi
-  - name: intelligence
-    releaseName: intelligence
-    namespace: kora-staging
-    valuesInline:
-      replicaCount: 1
-      image:
-        tag: staging-latest
-      resources:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-        limits:
-          cpu: 500m
-          memory: 512Mi
-  - name: iot-bridge
-    releaseName: iot-bridge
-    namespace: kora-staging
-    valuesInline:
-      replicaCount: 1
-      image:
-        tag: staging-latest
-      resources:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-        limits:
-          cpu: 500m
-          memory: 512Mi
-  - name: maintain
-    releaseName: maintain
-    namespace: kora-staging
-    valuesInline:
-      replicaCount: 1
-      image:
-        tag: staging-latest
-      resources:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-        limits:
-          cpu: 500m
-          memory: 512Mi
-  - name: marketing-site
-    releaseName: marketing-site
-    namespace: kora-staging
-    valuesInline:
-      replicaCount: 1
-      image:
-        tag: staging-latest
+        tag: d44920ef87513333fd381aaab737b7a0ddb1e6b0
+      env:
+        NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
+        VAULT_K8S_ROLE: "identity-staging"
       resources:
         requests:
           cpu: 100m
@@ -211,35 +116,10 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: staging-latest
-      resources:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-        limits:
-          cpu: 500m
-          memory: 512Mi
-  - name: ops
-    releaseName: ops
-    namespace: kora-staging
-    valuesInline:
-      replicaCount: 1
-      image:
-        tag: staging-latest
-      resources:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-        limits:
-          cpu: 500m
-          memory: 512Mi
-  - name: ops-pwa
-    releaseName: ops-pwa
-    namespace: kora-staging
-    valuesInline:
-      replicaCount: 1
-      image:
-        tag: staging-latest
+        tag: 817492ebf770b925453471e04c636353e780fcf4
+      env:
+        NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
+        VAULT_K8S_ROLE: "notification-staging"
       resources:
         requests:
           cpu: 100m
@@ -253,7 +133,10 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: staging-latest
+        tag: 817492ebf770b925453471e04c636353e780fcf4
+      env:
+        NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
+        VAULT_K8S_ROLE: "quality-staging"
       resources:
         requests:
           cpu: 100m
@@ -267,63 +150,11 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: staging-latest
-      resources:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-        limits:
-          cpu: 500m
-          memory: 512Mi
-  - name: trust-portal
-    releaseName: trust-portal
-    namespace: kora-staging
-    valuesInline:
-      replicaCount: 1
-      image:
-        tag: staging-latest
-      resources:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-        limits:
-          cpu: 500m
-          memory: 512Mi
-  - name: trust-portal-ui
-    releaseName: trust-portal-ui
-    namespace: kora-staging
-    valuesInline:
-      replicaCount: 1
-      image:
-        tag: staging-latest
-      resources:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-        limits:
-          cpu: 500m
-          memory: 512Mi
-  - name: vendor
-    releaseName: vendor
-    namespace: kora-staging
-    valuesInline:
-      replicaCount: 1
-      image:
-        tag: staging-latest
-      resources:
-        requests:
-          cpu: 100m
-          memory: 128Mi
-        limits:
-          cpu: 500m
-          memory: 512Mi
-  - name: web
-    releaseName: web
-    namespace: kora-staging
-    valuesInline:
-      replicaCount: 1
-      image:
-        tag: staging-latest
+        tag: dev-latest
+      env:
+        NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
+        REDIS_URL: "redis://redis-master.kora-staging.svc.cluster.local:6379"
+        IDENTITY_JWKS_URL: "http://identity.kora-staging.svc.cluster.local:3001/internal/jwks"
       resources:
         requests:
           cpu: 100m
@@ -337,7 +168,10 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: staging-latest
+        tag: 817492ebf770b925453471e04c636353e780fcf4
+      env:
+        NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
+        VAULT_K8S_ROLE: "workflow-staging"
       resources:
         requests:
           cpu: 100m
