@@ -27,7 +27,9 @@ env:
   VAULT_K8S_ROLE: "evidence-dev"
   MINIO_ENDPOINT: "minio.kora-dev.svc.cluster.local:9000"
   MINIO_USE_SSL: "false"
-  MINIO_BUCKET: "kora-evidence-checkpoints"
+  # -v2 (Phase 2 hardening, Kora ADR-066/067): a new, Object-Lock-enabled bucket generation, not
+  # a rename -- Object Lock can only be enabled at bucket creation.
+  MINIO_BUCKET: "kora-evidence-checkpoints-v2"
 
 # Credentials live in a Secret created out of band (see infra/bootstrap in the app monorepo)
 # so they are never committed to this repo. Empty means the service needs none.

@@ -1,0 +1,21 @@
+# Phase 2 hardening (Kora ADR-066) -- the actual alert ADR-054 disclosed as missing: a hash-chain
+# break now pages email (via Alertmanager's SMTP receiver, infra/terraform/modules/monitoring in
+# the app monorepo) instead of only producing a structured log line nobody is paged on.
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    app: {{ .Chart.Name }}
+    release: kube-prometheus-stack
+spec:
+  groups:
+    - name: evidence.chain-integrity
+      rules:
+        - alert: EvidenceChainIntegrityViolation
+          expr: increase(kora_evidence_chain_integrity_violations_total[5m]) > 0
+          labels:
+            severity: critical
+          annotations:
+            summary: "Evidence hash-chain integrity violation detected"
+            description: "organization_id={{ "{{" }} $labels.organization_id {{ "}}" }} failed the verification job's hash-chain check (ADR-054) in the last 5 minutes. Treat as a real tamper/corruption signal, not a transient blip."
