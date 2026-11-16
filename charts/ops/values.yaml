@@ -1,15 +1,35 @@
 image:
   repository: ghcr.io/muretimiriti/kora-ops
   tag: latest # overridden per environment -- environments/*/kustomization.yaml's valuesInline
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 replicaCount: 1
+
 service:
-  port: 3000
+  # Real listening port, from services/ops/.env.example's PORT (the scaffold claimed 3000).
+  port: 3009
   type: ClusterIP
+
+# Matches this service's actual health route (services/ops/src/app.ts).
+healthPath: /health
+
+serviceAccountName: ops-workload
+
+# Non-secret config, rendered into a ConfigMap and loaded via envFrom.
+env:
+  PORT: "3009"
+  NATS_URL: "nats://nats.kora-dev.svc.cluster.local:4222"
+  REDIS_URL: "redis://redis-master.kora-dev.svc.cluster.local:6379"
+  VAULT_ADDR: "http://vault.kora-dev.svc.cluster.local:8200"
+  # Vault Kubernetes-auth role; ops-policy allows sign/ops and read of keys/identity-jwt.
+  VAULT_K8S_ROLE: "ops-dev"
+
+# Created out of band (DATABASE_URL), never committed.
+secretName: kora-ops-secrets
+
 resources:
   requests:
     cpu: 100m
     memory: 128Mi
   limits:
-    cpu: 500m
+    cpu: 300m
     memory: 512Mi
