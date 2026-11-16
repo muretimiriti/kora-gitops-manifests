@@ -81,7 +81,7 @@ helmCharts:
       image:
         # Fixes the relay only ever polling Identity's own outbox table (ADR-069's follow-up) --
         # see relay.go's own comment on outboxTables.
-        tag: b06a929708e925a54dbd097630e255d67f4a1302
+        tag: e11ddc43a8471c0930a8a9732afa2f677e696d74
       resources:
         requests:
           cpu: 100m
