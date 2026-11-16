@@ -11,8 +11,23 @@ helmGlobals:
 # inflating them here would deploy 15 Deployments referencing images that were never built,
 # producing a wall of ImagePullBackOff pods and a permanently unhealthy ArgoCD Application.
 # Add each one back to this list when its service is actually implemented and pushing images.
-# Currently excluded: admin-console, agent-orchestrator, billing, core, esg, intelligence, iot-bridge, maintain, marketing-site, ops, ops-pwa, trust-portal, trust-portal-ui, vendor, web
+# Currently excluded: admin-console, agent-orchestrator, core, esg, intelligence, iot-bridge, maintain, marketing-site, ops, ops-pwa, trust-portal, trust-portal-ui, vendor, web
 helmCharts:
+  - name: billing
+    releaseName: billing
+    namespace: kora-dev
+    valuesInline:
+      replicaCount: 1
+      image:
+        # First deploy (2026-11-16): CI-built, cosign-signed from the app monorepo's main.
+        tag: d52c7a5fe598d03296f57061830950ccc854daa6
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
   - name: compliance
     releaseName: compliance
     namespace: kora-dev
