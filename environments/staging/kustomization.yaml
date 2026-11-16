@@ -33,6 +33,7 @@ helmCharts:
         tag: 817492ebf770b925453471e04c636353e780fcf4
       env:
         NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
+        REDIS_URL: "redis://redis-master.kora-staging.svc.cluster.local:6379"
         VAULT_K8S_ROLE: "compliance-staging"
       resources:
         requests:
@@ -50,6 +51,7 @@ helmCharts:
         tag: 817492ebf770b925453471e04c636353e780fcf4
       env:
         NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
+        REDIS_URL: "redis://redis-master.kora-staging.svc.cluster.local:6379"
         VAULT_K8S_ROLE: "compliance-forms-staging"
       resources:
         requests:
@@ -67,6 +69,7 @@ helmCharts:
         tag: 817492ebf770b925453471e04c636353e780fcf4
       env:
         NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
+        REDIS_URL: "redis://redis-master.kora-staging.svc.cluster.local:6379"
         VAULT_K8S_ROLE: "document-control-staging"
       resources:
         requests:
@@ -84,6 +87,7 @@ helmCharts:
         tag: a6395717d06a5c2fa1ac09c19dbc464f1e608580
       env:
         NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
+        REDIS_URL: "redis://redis-master.kora-staging.svc.cluster.local:6379"
         VAULT_K8S_ROLE: "evidence-staging"
         MINIO_ENDPOINT: "minio.kora-staging.svc.cluster.local:9000"
       resources:
@@ -102,6 +106,7 @@ helmCharts:
         tag: d44920ef87513333fd381aaab737b7a0ddb1e6b0
       env:
         NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
+        REDIS_URL: "redis://redis-master.kora-staging.svc.cluster.local:6379"
         VAULT_K8S_ROLE: "identity-staging"
       resources:
         requests:
@@ -119,6 +124,7 @@ helmCharts:
         tag: 817492ebf770b925453471e04c636353e780fcf4
       env:
         NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
+        REDIS_URL: "redis://redis-master.kora-staging.svc.cluster.local:6379"
         VAULT_K8S_ROLE: "notification-staging"
       resources:
         requests:
@@ -136,6 +142,7 @@ helmCharts:
         tag: 817492ebf770b925453471e04c636353e780fcf4
       env:
         NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
+        REDIS_URL: "redis://redis-master.kora-staging.svc.cluster.local:6379"
         VAULT_K8S_ROLE: "quality-staging"
       resources:
         requests:
@@ -171,6 +178,7 @@ helmCharts:
         tag: 817492ebf770b925453471e04c636353e780fcf4
       env:
         NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
+        REDIS_URL: "redis://redis-master.kora-staging.svc.cluster.local:6379"
         VAULT_K8S_ROLE: "workflow-staging"
       resources:
         requests:

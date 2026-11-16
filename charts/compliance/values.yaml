@@ -20,6 +20,10 @@ serviceAccountName: compliance-workload
 env:
   PORT: "3007"
   NATS_URL: "nats://nats.kora-dev.svc.cluster.local:4222"
+  # ADR-077/078: REST revocation registry (revoked:person:{id}) and, for quality/compliance/
+  # compliance-forms, the entitlement cache. Both readers fail open, so a wrong URL is silent -- keep
+  # this pointed at the SAME environment's Redis (staging overrides it in its kustomization).
+  REDIS_URL: "redis://redis-master.kora-dev.svc.cluster.local:6379"
   VAULT_ADDR: "http://vault.kora-dev.svc.cluster.local:8200"
   # Phase 3, Stage B (ADR-069): matches this service's own Vault Kubernetes-auth role
   # (infra/scripts/vault-policies.sh in the app monorepo) -- compliance-workload's ServiceAccount
