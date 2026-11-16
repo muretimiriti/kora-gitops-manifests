@@ -1,25 +1,35 @@
 image:
   repository: ghcr.io/muretimiriti/kora-billing
   tag: latest # overridden per environment -- environments/*/kustomization.yaml's valuesInline
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 replicaCount: 1
 
-# Phase 3, Stage B (ADR-069): added along with the other 8 real services' identical field --
-# billing's chart never got this in the original "make deployable" pass (it has no
-# healthPath/env/secretName wiring either, a separate pre-existing gap, not touched here).
-# Not currently deployed to kora-dev; added so it's correct whenever it is.
+service:
+  # Real listening port, from services/billing/.env.example's PORT (the chart previously claimed 3000,
+  # which Billing never listens on -- so even a healthy pod would have been unreachable).
+  port: 3011
+  type: ClusterIP
+
+# Matches this service's actual health route (src/app.ts).
+healthPath: /health
+
 serviceAccountName: billing-workload
 
-# Phase 3, Stage B (ADR-069): VAULT_ADDR/VAULT_K8S_ROLE needed for real Vault auth to work at
-# all -- without VAULT_ADDR, signOutboxEntry.ts's own default (http://localhost:8200) would be
-# wrong in-cluster. Matches the identical block every other real service's values.yaml has.
+# Non-secret config, rendered into a ConfigMap and loaded via envFrom.
 env:
+  PORT: "3011"
+  NATS_URL: "nats://nats.kora-dev.svc.cluster.local:4222"
+  # Entitlement cache writer (ADR-034/035) -- keep pointed at the SAME environment's Redis.
+  REDIS_URL: "redis://redis-master.kora-dev.svc.cluster.local:6379"
   VAULT_ADDR: "http://vault.kora-dev.svc.cluster.local:8200"
+  # Vault Kubernetes-auth role (ADR-069); billing-policy allows sign/billing and read of
+  # keys/onboarding-session-jwt (verifying the signup session token).
   VAULT_K8S_ROLE: "billing-dev"
 
-service:
-  port: 3000
-  type: ClusterIP
+# Created out of band (DATABASE_URL, FLUTTERWAVE_*), never committed. Dev uses placeholder Flutterwave
+# values until Kora's real merchant account exists (ADR-039/061).
+secretName: kora-billing-secrets
+
 resources:
   requests:
     cpu: 100m
