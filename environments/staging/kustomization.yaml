@@ -30,7 +30,7 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: 817492ebf770b925453471e04c636353e780fcf4
+        tag: 8c1996b672e13bdeceff4af3acd6a864305561d3
       env:
         NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
         REDIS_URL: "redis://redis-master.kora-staging.svc.cluster.local:6379"
@@ -48,7 +48,7 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: 817492ebf770b925453471e04c636353e780fcf4
+        tag: 8c1996b672e13bdeceff4af3acd6a864305561d3
       env:
         NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
         REDIS_URL: "redis://redis-master.kora-staging.svc.cluster.local:6379"
@@ -66,7 +66,7 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: 817492ebf770b925453471e04c636353e780fcf4
+        tag: cea3562d81e44d0f8784a7c4b2be748fe93b4ca1
       env:
         NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
         REDIS_URL: "redis://redis-master.kora-staging.svc.cluster.local:6379"
@@ -84,7 +84,7 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: a6395717d06a5c2fa1ac09c19dbc464f1e608580
+        tag: b06a929708e925a54dbd097630e255d67f4a1302
       env:
         NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
         REDIS_URL: "redis://redis-master.kora-staging.svc.cluster.local:6379"
@@ -103,7 +103,7 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: d44920ef87513333fd381aaab737b7a0ddb1e6b0
+        tag: b06a929708e925a54dbd097630e255d67f4a1302
       env:
         NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
         REDIS_URL: "redis://redis-master.kora-staging.svc.cluster.local:6379"
@@ -121,7 +121,7 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: 817492ebf770b925453471e04c636353e780fcf4
+        tag: 8c1996b672e13bdeceff4af3acd6a864305561d3
       env:
         NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
         REDIS_URL: "redis://redis-master.kora-staging.svc.cluster.local:6379"
@@ -139,7 +139,7 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: 817492ebf770b925453471e04c636353e780fcf4
+        tag: b06a929708e925a54dbd097630e255d67f4a1302
       env:
         NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
         REDIS_URL: "redis://redis-master.kora-staging.svc.cluster.local:6379"
@@ -157,7 +157,7 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: dev-latest
+        tag: b06a929708e925a54dbd097630e255d67f4a1302
       env:
         NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
         REDIS_URL: "redis://redis-master.kora-staging.svc.cluster.local:6379"
@@ -175,7 +175,7 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       image:
-        tag: 817492ebf770b925453471e04c636353e780fcf4
+        tag: 8c1996b672e13bdeceff4af3acd6a864305561d3
       env:
         NATS_URL: "nats://nats.kora-staging.svc.cluster.local:4222"
         REDIS_URL: "redis://redis-master.kora-staging.svc.cluster.local:6379"
