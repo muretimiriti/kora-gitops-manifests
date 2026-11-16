@@ -1,0 +1,51 @@
+# Keeps staging's JetStream streams present. Staging's NATS stores streams on temporary disk (the
+# JetStream PVC was dropped to stay under the node's disk-attach limit, ADR-072), so a NATS pod
+# restart loses every stream and notification then crash-loops with `StreamNotFoundError` until
+# someone re-runs infra/scripts/create-nats-streams.sh in the app monorepo (found 2026-11-16).
+# This CronJob is that script, idempotent and on a schedule: it only creates a stream that is
+# missing and never touches an existing one. Keep the list in step with that script.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: nats-streams
+  namespace: kora-staging
+spec:
+  schedule: "*/10 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      activeDeadlineSeconds: 120
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: ensure-streams
+              image: natsio/nats-box:0.19.7
+              resources:
+                requests:
+                  cpu: 20m
+                  memory: 32Mi
+                limits:
+                  cpu: 100m
+                  memory: 64Mi
+              env:
+                - name: NATS_SERVER
+                  value: nats://nats.kora-staging.svc.cluster.local:4222
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  set -eu
+                  for pair in NCR:ncr.\> CAPA:capa.\> CILT_COMPLETION:cilt_completion.\> READINESS_SCORE:readiness_score.\> \
+                              DOCUMENT:document.\> COMPLIANCE_STANDARD:compliance_standard.\> CRITICAL_CONTROL:critical_control.\> \
+                              COMPLIANCE_FORM:compliance_form.\> ORGANIZATION:organization.\>; do
+                    name="${pair%%:*}"; subjects="${pair#*:}"
+                    if nats stream info "$name" --server "$NATS_SERVER" >/dev/null 2>&1; then
+                      echo "[ok] $name"
+                    else
+                      echo "[create] $name ($subjects)"
+                      nats stream add "$name" --subjects "$subjects" --storage file --retention limits --defaults --server "$NATS_SERVER" >/dev/null
+                    fi
+                  done
