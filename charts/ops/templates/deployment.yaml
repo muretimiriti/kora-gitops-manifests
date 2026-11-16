@@ -1,24 +1,51 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ops
+  name: {{ .Chart.Name }}
   labels:
-    app: ops
+    app: {{ .Chart.Name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: ops
+      app: {{ .Chart.Name }}
   template:
     metadata:
       labels:
-        app: ops
+        app: {{ .Chart.Name }}
     spec:
+      # Created by hand in each environment (annotated for the Vault Agent Injector), not by
+      # Terraform -- see the cluster operations runbook in the app monorepo.
+      serviceAccountName: {{ .Values.serviceAccountName }}
       containers:
-        - name: ops
+        - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.service.port }}
+            - name: http
+              containerPort: {{ .Values.service.port }}
+          # Without these the pod starts with no DATABASE_URL, no NATS_URL, no VAULT_ADDR --
+          # it would crash on boot. Non-secret config is rendered into a ConfigMap from
+          # .Values.env; credentials come from a Secret created out of band (never committed
+          # to this repo) and named by .Values.secretName.
+          envFrom:
+            - configMapRef:
+                name: {{ .Chart.Name }}-config
+          {{- if .Values.secretName }}
+            - secretRef:
+                name: {{ .Values.secretName }}
+          {{- end }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.healthPath }}
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.healthPath }}
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
