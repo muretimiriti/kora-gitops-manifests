@@ -127,7 +127,7 @@ helmCharts:
       replicaCount: 1
       image:
         # First deploy (2026-11-16): CI-built, cosign-signed from the app monorepo's main.
-        tag: e11ddc43a8471c0930a8a9732afa2f677e696d74
+        tag: 547fea7e5b21f82636d4c72e2585ad99572125e8
       resources:
         requests:
           cpu: 100m
